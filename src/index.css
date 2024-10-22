@@ -333,6 +333,8 @@ footer .copyright {
     border: 1px solid #007bff;
     margin-bottom: 1rem;
     height: 300px;
+    max-height: 300px; /* Adjust this value as needed */
+    overflow-y: auto;
 }
 
 #mini-calendar-container iframe {
@@ -356,6 +358,18 @@ footer .copyright {
 @media (max-width: 480px) {
     #mini-calendar-container {
         height: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    #mini-calendar-container .fc {
+        max-height: 250px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    #mini-calendar-container .fc {
+        max-height: 200px !important;
     }
 }
 
@@ -488,4 +502,639 @@ footer .copyright {
 .map-container {
     padding-top: 2rem;
     padding-bottom: 2rem;
+}
+
+#mini-calendar-container .fc {
+    height: auto !important;
+    max-height: none !important;
+}
+
+#mini-calendar-container .fc .fc-scroller {
+    overflow: visible !important;
+}
+
+#mini-calendar-container .fc-list-event:hover {
+    background-color: #3788d8 !important;
+}
+
+#mini-calendar-container .fc-list-event:hover .fc-list-event-title,
+#mini-calendar-container .fc-list-event:hover .fc-list-event-time {
+    color: white !important;
+}
+
+#mini-calendar-container .fc-list-event-dot {
+    display: none !important;
+}
+
+#mini-calendar-container .fc-list-event {
+    background-color: #3788d8 !important;
+    border: none !important;
+    padding: 2px 8px !important;
+}
+
+#mini-calendar-container .fc-list-event-time,
+#mini-calendar-container .fc-list-event-title {
+    color: white !important;
+    display: inline !important;
+}
+
+#mini-calendar-container .fc-list-event-time {
+    margin-right: 5px !important;
+}
+
+#mini-calendar-container .fc-list-event:hover,
+#mini-calendar-container .fc-list-event:hover .fc-list-event-time,
+#mini-calendar-container .fc-list-event:hover .fc-list-event-title {
+    background-color: #3788d8 !important;
+    color: white !important;
+}
+
+#mini-calendar-container .fc-list-event-dot {
+    display: none !important;
+}
+
+#mini-calendar-container .fc-list-event td,
+#mini-calendar-container .fc-list-event:hover td {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+#mini-calendar-container .fc-header-toolbar {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+#mini-calendar-container .fc-toolbar-title {
+    margin-bottom: 0 !important;
+    padding-bottom: 4px !important;
+    font-size: 1.2em !important;
+}
+
+#mini-calendar-container .fc-list-day {
+    padding-top: 4px !important;
+}
+
+#mini-calendar-container .fc-list-day-cushion {
+    padding: 4px 8px !important;
+}
+
+#mini-calendar-container .fc-list-event {
+    padding: 1px 8px !important;
+}
+
+#mini-calendar-container table {
+    margin-bottom: 0 !important;
+}
+
+#mini-calendar-container .fc-scroller {
+    overflow-y: hidden !important;
+}
+
+#mini-calendar-container {
+    height: auto !important;
+    max-height: 200px !important; /* Adjust this value as needed */
+    overflow: hidden !important;
+}
+
+#mini-calendar-container .fc-scroller {
+    height: auto !important;
+    max-height: 150px !important; /* This should be enough for 3 events plus some header space */
+    overflow-y: hidden !important;
+}
+
+#mini-calendar-container .fc-list-empty {
+    display: none !important; /* Hide the "No events" message if it appears */
+}
+
+#mini-calendar-container .fc-list-event {
+    padding: 2px 8px !important;
+}
+
+#mini-calendar-container .fc-list-day-cushion {
+    padding: 4px 8px !important;
+}
+
+@media (max-width: 768px) {
+    .calendar-description,
+    .calendar-info,
+    .calendar-download,
+    .calendar-contact {
+        font-size: 14px;
+    }
+
+    .button {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .section-padding {
+        padding: 20px 10px;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+}
+
+#mini-calendar-container .fc-list-event {
+    margin-bottom: 2px;
+}
+
+#mini-calendar-container .fc-list-day-side-text,
+#mini-calendar-container .fc-list-day-text {
+    font-weight: bold;
+}
+
+#mini-calendar-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+#mini-calendar-container .fc-scroller {
+    overflow: visible !important;
+    height: auto !important;
+}
+
+#mini-calendar-container .fc-list-table {
+    height: auto !important;
+}
+
+#mini-calendar-container .fc-list-event {
+    margin-bottom: 2px;
+    display: block !important;
+    padding: 4px 8px !important;
+}
+
+#mini-calendar-container .fc-list-day {
+    background-color: #f8f9fa !important;
+    padding: 8px !important;
+    margin-top: 8px !important;
+    font-weight: bold !important;
+    color: #333 !important;
+}
+
+#mini-calendar-container .fc-list-day-cushion {
+    padding: 8px !important;
+}
+
+#mini-calendar-container .fc-list-day-text,
+#mini-calendar-container .fc-list-day-side-text {
+    font-weight: bold;
+    color: #333;
+}
+
+#mini-calendar-container .fc-list-event-time {
+    width: auto;
+    min-width: 80px;
+    display: inline-block !important;
+    vertical-align: top !important;
+}
+
+#mini-calendar-container .fc-list-event-title {
+    display: inline-block !important;
+    vertical-align: top !important;
+}
+
+#mini-calendar-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+#mini-calendar-container .fc-list-event {
+    display: flex !important;
+    align-items: center !important;
+    padding: 6px 8px !important;
+    margin-bottom: 2px !important;
+    background-color: #3788d8 !important;
+    color: white !important;
+    height: 32px !important; /* Set a fixed height */
+    box-sizing: border-box !important;
+}
+
+#mini-calendar-container .fc-list-event-time {
+    flex: 0 0 auto !important;
+    margin-right: 8px !important;
+    white-space: nowrap !important;
+}
+
+#mini-calendar-container .fc-list-event-title {
+    flex: 1 1 auto !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+#mini-calendar-container .fc-list-day {
+    background-color: #f8f9fa !important;
+    padding: 8px !important;
+    font-weight: bold !important;
+    color: #333 !important;
+}
+
+#mini-calendar-container .fc-list-day-cushion {
+    padding: 8px !important;
+}
+
+#mini-calendar-container .fc-list-table {
+    border-collapse: separate !important;
+    border-spacing: 0 2px !important;
+}
+
+#mini-calendar-container .fc-list-day {
+    background-color: #f8f9fa !important;
+    margin-top: 8px !important;
+    color: #333 !important;
+    height: 40px !important; /* Set a fixed height */
+    display: flex !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+}
+
+#mini-calendar-container .fc-list-day-cushion {
+    padding: 0 8px !important;
+    font-weight: bold !important;
+    width: 100% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+#mini-calendar-container {
+    max-height: 400px; /* Increase the max-height */
+    overflow-y: auto; /* Add scrollbar if content exceeds max-height */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#mini-calendar-container .fc-list-day {
+    background-color: #f8f9fa !important;
+    padding: 8px !important;
+    font-weight: bold !important;
+    color: #333 !important;
+    border-top: 1px solid #ddd;
+    margin-top: 10px;
+}
+
+#mini-calendar-container .fc-list-day:first-child {
+    border-top: none;
+    margin-top: 0;
+}
+
+#mini-calendar-container .fc-list-day-cushion {
+    padding: 8px !important;
+}
+
+#mini-calendar-container .fc-list-event {
+    display: flex !important;
+    align-items: center !important;
+    padding: 6px 8px !important;
+    margin-bottom: 2px !important;
+    background-color: #3788d8 !important;
+    color: white !important;
+    min-height: 32px !important;
+    box-sizing: border-box !important;
+    border-radius: 4px;
+}
+
+#mini-calendar-container .fc-list-event-time {
+    flex: 0 0 auto !important;
+    margin-right: 8px !important;
+    white-space: nowrap !important;
+    min-width: 60px !important;
+}
+
+#mini-calendar-container .fc-list-event-title {
+    flex: 1 1 auto !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+#mini-calendar-container {
+    max-height: none; /* Remove max-height restriction */
+    overflow-y: visible; /* Allow content to expand */
+}
+
+#mini-calendar-container .fc-list-event {
+    display: flex !important;
+    align-items: center !important;
+    padding: 6px 8px !important;
+    margin-bottom: 2px !important;
+    background-color: #3788d8 !important;
+    color: white !important;
+    height: 32px !important; /* Set a fixed height */
+    box-sizing: border-box !important;
+}
+
+#mini-calendar-container .fc-list-event-time {
+    flex: 0 0 auto !important;
+    margin-right: 8px !important;
+    white-space: nowrap !important;
+}
+
+#mini-calendar-container .fc-list-event-title {
+    flex: 1 1 auto !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+#mini-calendar-container .fc-list-day {
+    background-color: #f8f9fa !important;
+    padding: 8px !important;
+    font-weight: bold !important;
+    color: #333 !important;
+}
+
+#mini-calendar-container .fc-list-day-cushion {
+    padding: 8px !important;
+}
+
+#mini-calendar-container .fc-list-view-more {
+    text-align: center;
+    padding: 8px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #ddd;
+}
+
+#mini-calendar-container .fc-list-view-more a {
+    color: #3788d8;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#mini-calendar-container .fc-list-view-more a:hover {
+    text-decoration: underline;
+}
+
+#mini-calendar-container {
+    max-height: none;
+    overflow-y: visible;
+    padding-bottom: 10px; /* Add padding to the bottom */
+}
+
+#mini-calendar-container .fc-list-event {
+    display: flex !important;
+    align-items: center !important;
+    padding: 6px 8px !important;
+    margin-bottom: 2px !important;
+    background-color: #3788d8 !important;
+    color: white !important;
+    height: 32px !important;
+    box-sizing: border-box !important;
+}
+
+#mini-calendar-container .fc-list-event-time {
+    flex: 0 0 auto !important;
+    margin-right: 8px !important;
+    white-space: nowrap !important;
+}
+
+#mini-calendar-container .fc-list-event-title {
+    flex: 1 1 auto !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+#mini-calendar-container .fc-list-day {
+    background-color: #f8f9fa !important;
+    padding: 8px !important;
+    font-weight: bold !important;
+    color: #333 !important;
+}
+
+#mini-calendar-container .fc-list-day-cushion {
+    padding: 8px !important;
+}
+
+#mini-calendar-container .fc-list-view-more {
+    text-align: center;
+    padding: 8px;
+    margin-top: 5px; /* Add margin to separate from events */
+}
+
+#mini-calendar-container .fc-list-view-more a {
+    display: inline-block; /* Make the link a block element */
+    padding: 5px 10px; /* Add padding to increase clickable area */
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #3788d8;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#mini-calendar-container .fc-list-view-more a:hover {
+    background-color: #e9ecef;
+    text-decoration: none;
+}
+
+#mini-calendar-container {
+    display: flex;
+    flex-direction: column;
+    max-height: none;
+    overflow: visible;
+}
+
+#mini-calendar-container .fc-list-event {
+    display: flex !important;
+    align-items: center !important;
+    padding: 6px 8px !important;
+    margin-bottom: 2px !important;
+    background-color: #3788d8 !important;
+    color: white !important;
+    height: 32px !important;
+    box-sizing: border-box !important;
+}
+
+#mini-calendar-container .fc-list-event-time {
+    flex: 0 0 auto !important;
+    margin-right: 8px !important;
+    white-space: nowrap !important;
+}
+
+#mini-calendar-container .fc-list-event-title {
+    flex: 1 1 auto !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+#mini-calendar-container .fc-list-day {
+    background-color: #f8f9fa !important;
+    padding: 8px !important;
+    font-weight: bold !important;
+    color: #333 !important;
+}
+
+#mini-calendar-container .fc-list-day-cushion {
+    padding: 8px !important;
+}
+
+#mini-calendar-container .fc-list-view-more {
+    margin-top: 10px;
+    padding: 8px;
+    text-align: center;
+    background-color: #f8f9fa;
+    border-top: 1px solid #ddd;
+}
+
+#mini-calendar-container .fc-list-view-more a {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #3788d8;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+#mini-calendar-container .fc-list-view-more a:hover {
+    background-color: #2c6aa0;
+}
+
+#mini-calendar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align content to the top */
+    max-height: none;
+    overflow: visible;
+    padding-top: 0; /* Remove top padding if any */
+}
+
+#mini-calendar-container .fc-list-day:first-child {
+    margin-top: 0; /* Remove top margin from the first date header */
+}
+
+#mini-calendar-container .fc-list-event {
+    display: flex !important;
+    align-items: center !important;
+    padding: 6px 8px !important;
+    margin-bottom: 2px !important;
+    background-color: #3788d8 !important;
+    color: white !important;
+    height: 32px !important;
+    box-sizing: border-box !important;
+}
+
+#mini-calendar-container .fc-list-event-time {
+    flex: 0 0 auto !important;
+    margin-right: 8px !important;
+    white-space: nowrap !important;
+}
+
+#mini-calendar-container .fc-list-event-title {
+    flex: 1 1 auto !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+#mini-calendar-container .fc-list-day {
+    background-color: #f8f9fa !important;
+    padding: 8px !important;
+    font-weight: bold !important;
+    color: #333 !important;
+}
+
+#mini-calendar-container .fc-list-day-cushion {
+    padding: 8px !important;
+}
+
+#mini-calendar-container .fc-list-view-more {
+    margin-top: auto; /* Push the "View More" link to the bottom */
+    padding: 8px;
+    text-align: center;
+    background-color: #f8f9fa;
+    border-top: 1px solid #ddd;
+}
+
+#mini-calendar-container .fc-list-view-more a {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #3788d8;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+#mini-calendar-container .fc-list-view-more a:hover {
+    background-color: #2c6aa0;
+}
+
+#mini-calendar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    max-height: none;
+    overflow: visible;
+    padding-top: 0;
+}
+
+#mini-calendar-container .fc-list-day {
+    background-color: #f8f9fa !important;
+    padding: 4px 8px !important; /* Reduced padding */
+    font-weight: bold !important;
+    color: #333 !important;
+    margin-top: 4px !important; /* Reduced top margin */
+    margin-bottom: 2px !important; /* Added small bottom margin */
+}
+
+#mini-calendar-container .fc-list-day:first-child {
+    margin-top: 0 !important;
+}
+
+#mini-calendar-container .fc-list-day-cushion {
+    padding: 0 !important; /* Removed padding */
+}
+
+#mini-calendar-container .fc-list-event {
+    display: flex !important;
+    align-items: center !important;
+    padding: 4px 8px !important; /* Slightly reduced padding */
+    margin-bottom: 2px !important;
+    background-color: #3788d8 !important;
+    color: white !important;
+    height: 28px !important; /* Slightly reduced height */
+    box-sizing: border-box !important;
+}
+
+#mini-calendar-container .fc-list-event-time {
+    flex: 0 0 auto !important;
+    margin-right: 8px !important;
+    white-space: nowrap !important;
+}
+
+#mini-calendar-container .fc-list-event-title {
+    flex: 1 1 auto !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+#mini-calendar-container .fc-list-view-more {
+    margin-top: auto;
+    padding: 8px;
+    text-align: center;
+    background-color: #f8f9fa;
+    border-top: 1px solid #ddd;
+}
+
+#mini-calendar-container .fc-list-view-more a {
+    display: inline-block;
+    padding: 4px 8px;
+    background-color: #3788d8;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+#mini-calendar-container .fc-list-view-more a:hover {
+    background-color: #2c6aa0;
 }
