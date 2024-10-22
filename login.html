@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Hibberdene Academy</title>
+    <link rel="stylesheet" href="src/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://alcdn.msauth.net/browser/2.30.0/js/msal-browser.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Academics <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="programs.html">Programs</a>
+                        <a href="faculty.html">Faculty</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Student Life <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="news.html">News</a>
+                        <a href="calendar.html">Calendar</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Parents <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="admissions-and-fees.html">Admissions and Fees</a>
+                        <a href="parents.html">Parent Resources</a>
+                    </div>
+                </li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="login">
+            <h1>Login</h1>
+            <button id="loginButton" class="login-btn">
+                <i class="fas fa-sign-in-alt"></i> Login with Microsoft 365
+            </button>
+            <div id="error-message" class="error-message" style="display: none;"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="copyright">
+            &copy; 2023 Hibberdene Academy. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        const msalConfig = {
+            auth: {
+                clientId: "7442c895-c608-48bd-a949-2b70856ed99e",
+                authority: "https://login.microsoftonline.com/f2ad13d2-aabc-4b51-bf4b-fecf881d61a6",
+                redirectUri: window.location.origin + "/login.html",
+            },
+            cache: {
+                cacheLocation: "localStorage",
+                storeAuthStateInCookie: true,
+            },
+        };
+
+        const msalInstance = new msal.PublicClientApplication(msalConfig);
+
+        document.getElementById("loginButton").addEventListener("click", () => {
+            msalInstance.loginRedirect({
+                scopes: ["openid", "profile", "User.Read"]
+            });
+        });
+
+        // Handle the redirect promise when the page loads
+        msalInstance.handleRedirectPromise().then((tokenResponse) => {
+            if (tokenResponse !== null) {
+                // User has been successfully authenticated
+                console.log("Login successful", tokenResponse);
+                window.location.href = "https://www.office.com/";
+            }
+        }).catch((error) => {
+            console.error("Error during login", error);
+            const errorMessage = document.getElementById("error-message");
+            errorMessage.textContent = "Login failed. Please try again.";
+            errorMessage.style.display = "block";
+        });
+    </script>
+</body>
+</html>

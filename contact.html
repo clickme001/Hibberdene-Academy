@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Hibberdene Academy. Get in touch with us for inquiries, admissions, or general information.">
+    <meta name="keywords" content="Hibberdene Academy, contact, inquiries, admissions">
     <title>Contact Us - Hibberdene Academy</title>
     <link rel="stylesheet" href="src/index.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -16,43 +18,70 @@
             <ul class="nav-menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About Us</a></li>
-                <li><a href="programs.html">Programs</a></li>
-                <li><a href="admissions-and-fees.html">Admissions and Fees</a></li>
-                <li><a href="student-life.html">Student Life</a></li>
-                <li><a href="news.html">News</a></li>
-                <li><a href="faculty.html">Faculty</a></li>
-                <li><a href="parents.html">Parent Resources</a></li>
-                <li><a href="calendar.html">Calendar</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Academics <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="programs.html">Programs</a>
+                        <a href="faculty.html">Faculty</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Student Life <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="news.html">News</a>
+                        <a href="calendar.html">Calendar</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Parents <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="admissions-and-fees.html">Admissions and Fees</a>
+                        <a href="parents.html">Parent Resources</a>
+                    </div>
+                </li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
+            <div class="staff-login">
+                <a href="login.html" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+            </div>
         </nav>
     </header>
 
     <main>
-        <section id="contact">
-            <h1>Contact Us</h1>
+        <h1>Contact Us</h1>
+        <div class="contact-container">
             <div class="contact-info">
                 <h2>Get in Touch</h2>
-                <p>Address: [School Address]</p>
-                <p>Phone: [School Phone Number]</p>
-                <p>Email: [School Email]</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 School Street, Hibberdene, 4220</p>
+                <p><i class="fas fa-phone"></i> +27 (0)39 123 4567</p>
+                <p><i class="fas fa-envelope"></i> info@hibberdeneacademy.com</p>
             </div>
             <div class="contact-form">
-                <h2>Send us a Message</h2>
-                <form id="contact-form">
+                <h2>Send Us a Message</h2>
+                <form action="#" method="POST">
                     <input type="text" name="name" placeholder="Your Name" required>
                     <input type="email" name="email" placeholder="Your Email" required>
                     <input type="text" name="subject" placeholder="Subject" required>
-                    <textarea name="message" placeholder="Your Message" required></textarea>
-                    <button type="submit" class="button">Send Message</button>
+                    <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                    <button type="submit">Send Message</button>
                 </form>
             </div>
-        </section>
+        </div>
     </main>
 
-    <h2>Our Location</h2>
+    <!-- Map container placed just above the footer -->
     <div class="map-container">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3435.256581324914!2d30.5696396745564!3d-30.570301455859553!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1ef621a86194df4b%3A0x240c19d029ad9fa!2sHibberdene%20Academy!5e0!3m2!1sen!2sza!4v1729588507309!5m2!1sen!2sza" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3435.256581324914!2d30.5696396745564!3d-30.570301455859553!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1ef621a86194df4b%3A0x240c19d029ad9fa!2sHibberdene%20Academy!5e0!3m2!1sen!2sza!4v1729588507309!5m2!1sen!2sza"
+            width="100%" 
+            height="450" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
     </div>
 
     <footer>

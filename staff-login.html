@@ -32,7 +32,7 @@
             auth: {
                 clientId: "7442c895-c608-48bd-a949-2b70856ed99e",
                 authority: "https://login.microsoftonline.com/f2ad13d2-aabc-4b51-bf4b-fecf881d61a6",
-                redirectUri: "https://clickme001.github.io/Hibberdene-Academy/staff-login.html",
+                redirectUri: window.location.origin + "/staff-login.html",
             },
             cache: {
                 cacheLocation: "localStorage",
@@ -42,28 +42,24 @@
 
         const msalInstance = new msal.PublicClientApplication(msalConfig);
 
-        document.getElementById("loginButton").addEventListener("click", async () => {
-            try {
-                const loginResponse = await msalInstance.loginPopup({
-                    scopes: ["openid", "profile", "User.Read"],
-                });
-                console.log("Login successful", loginResponse);
-                window.location.href = "https://www.office.com/";
-            } catch (error) {
-                console.error("Login failed", error);
-                const errorMessage = document.getElementById("error-message");
-                errorMessage.textContent = "Login failed. Please try again.";
-                errorMessage.style.display = "block";
-            }
+        document.getElementById("loginButton").addEventListener("click", () => {
+            msalInstance.loginRedirect({
+                scopes: ["openid", "profile", "User.Read"]
+            });
         });
 
-        // Check if the user is already logged in
+        // Handle the redirect promise when the page loads
         msalInstance.handleRedirectPromise().then((tokenResponse) => {
             if (tokenResponse !== null) {
+                // User has been successfully authenticated
+                console.log("Login successful", tokenResponse);
                 window.location.href = "https://www.office.com/";
             }
         }).catch((error) => {
-            console.error("Error during silent sign-in", error);
+            console.error("Error during login", error);
+            const errorMessage = document.getElementById("error-message");
+            errorMessage.textContent = "Login failed. Please try again.";
+            errorMessage.style.display = "block";
         });
     </script>
 </body>

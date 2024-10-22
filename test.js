@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.querySelector('.nav-menu');
+    const dropdowns = document.querySelectorAll('.dropdown');
 
     // Google Calendar API settings
     const API_KEY = 'AIzaSyAFy9H989WzchgCk5WK2XM_oPwrpoB6Ico';
@@ -45,6 +46,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 events: events,
                 eventDidMount: function(info) {
                     console.log('Event mounted:', info.event.title);
+                    const eventEl = info.el;
+                    const isExam = info.event.title.toLowerCase().includes('exam');
+                    const eventDate = new Date(info.event.start);
+                    const isWeekend = eventDate.getDay() === 0 || eventDate.getDay() === 6;
+
+                    if (isExam && !isWeekend) {
+                        eventEl.style.backgroundColor = 'yellow';
+                        eventEl.style.borderColor = 'yellow';
+                        eventEl.style.color = 'black';
+                    } else {
+                        // Reset to default colors for non-exam events or weekend exams
+                        eventEl.style.backgroundColor = '';
+                        eventEl.style.borderColor = '';
+                        eventEl.style.color = '';
+                    }
+
+                    // Ensure the event title text color is set correctly
+                    const eventTitleEl = eventEl.querySelector('.fc-event-title');
+                    if (eventTitleEl) {
+                        eventTitleEl.style.color = isExam && !isWeekend ? 'black' : '';
+                    }
                 },
                 noEventsContent: 'No events to display'
             }).render();
@@ -78,10 +100,26 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (eventCount >= 2) break;
                     const eventEl = document.createElement('div');
                     eventEl.className = 'fc-list-event';
+                    const isExam = event.title.toLowerCase().includes('exam');
+                    const eventDate = new Date(event.start);
+                    const isWeekend = eventDate.getDay() === 0 || eventDate.getDay() === 6;
+
+                    const eventTitleEl = document.createElement('div');
+                    eventTitleEl.className = 'fc-list-event-title';
+                    eventTitleEl.textContent = event.title;
+
+                    if (isExam && !isWeekend) {
+                        eventTitleEl.style.backgroundColor = 'yellow';
+                        eventTitleEl.style.color = 'black';
+                    } else {
+                        eventTitleEl.style.backgroundColor = '';
+                        eventTitleEl.style.color = '';
+                    }
+
                     eventEl.innerHTML = `
                         <div class="fc-list-event-time">${formatEventTime(event)}</div>
-                        <div class="fc-list-event-title">${event.title}</div>
                     `;
+                    eventEl.appendChild(eventTitleEl);
                     miniCalendarEl.appendChild(eventEl);
                     eventCount++;
                 }
@@ -125,15 +163,49 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Navigation toggle for mobile
-    navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
+    if (navToggle) {
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    }
+
+    // Dropdown functionality
+    dropdowns.forEach(dropdown => {
+        const dropdownToggle = dropdown.querySelector('.dropbtn');
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+        if (dropdownToggle && dropdownContent) {
+            dropdownToggle.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdownContent.classList.toggle('active');
+                }
+            });
+
+            // Close dropdown when a link inside is clicked
+            dropdownContent.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        navMenu.classList.remove('active');
+                        dropdowns.forEach(d => {
+                            const content = d.querySelector('.dropdown-content');
+                            if (content) content.classList.remove('active');
+                        });
+                    }
+                });
+            });
+        }
     });
 
     // Close menu when clicking outside
     document.addEventListener('click', (event) => {
-        const isClickInsideNav = navMenu.contains(event.target) || navToggle.contains(event.target);
+        const isClickInsideNav = navMenu.contains(event.target) || (navToggle && navToggle.contains(event.target));
         if (!isClickInsideNav && navMenu.classList.contains('active')) {
             navMenu.classList.remove('active');
+            dropdowns.forEach(dropdown => {
+                const content = dropdown.querySelector('.dropdown-content');
+                if (content) content.classList.remove('active');
+            });
         }
     });
 
@@ -142,31 +214,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Carousel functionality
     const carousel = document.querySelector('.carousel');
-    if (carousel) {
-        const carouselItems = carousel.querySelectorAll('.carousel-item');
-        const prevButton = carousel.querySelector('.prev');
-        const nextButton = carousel.querySelector('.next');
-        let currentIndex = 0;
+    const carouselItems = carousel.querySelectorAll('.carousel-item');
+    const prevButton = carousel.querySelector('.prev');
+    const nextButton = carousel.querySelector('.next');
+    let currentIndex = 0;
 
-        function showSlide(index) {
-            carouselItems.forEach(item => item.classList.remove('active'));
-            carouselItems[index].classList.add('active');
-        }
-
-        function nextSlide() {
-            currentIndex = (currentIndex + 1) % carouselItems.length;
-            showSlide(currentIndex);
-        }
-
-        function prevSlide() {
-            currentIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length;
-            showSlide(currentIndex);
-        }
-
-        nextButton.addEventListener('click', nextSlide);
-        prevButton.addEventListener('click', prevSlide);
-
-        // Auto-advance slides every 5 seconds
-        setInterval(nextSlide, 5000);
+    function showSlide(index) {
+        carouselItems.forEach(item => item.classList.remove('active'));
+        carouselItems[index].classList.add('active');
+        adjustCarouselImage(carouselItems[index].querySelector('img'));
     }
+
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % carouselItems.length;
+        showSlide(currentIndex);
+    }
+
+    function prevSlide() {
+        currentIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length;
+        showSlide(currentIndex);
+    }
+
+    nextButton.addEventListener('click', nextSlide);
+    prevButton.addEventListener('click', prevSlide);
+
+    // Auto-advance slides every 5 seconds
+    setInterval(nextSlide, 5000);
+
+    // Function to adjust carousel image
+    function adjustCarouselImage(img) {
+        const container = img.closest('.carousel-item');
+        const containerAspect = container.offsetWidth / container.offsetHeight;
+        const imgAspect = img.naturalWidth / img.naturalHeight;
+
+        if (imgAspect > containerAspect) {
+            img.style.width = '100%';
+            img.style.height = 'auto';
+        } else {
+            img.style.width = 'auto';
+            img.style.height = '100%';
+        }
+    }
+
+    // Adjust all carousel images on load and resize
+    function adjustAllCarouselImages() {
+        carouselItems.forEach(item => {
+            const img = item.querySelector('img');
+            if (img.complete) {
+                adjustCarouselImage(img);
+            } else {
+                img.addEventListener('load', () => adjustCarouselImage(img));
+            }
+        });
+    }
+
+    window.addEventListener('resize', adjustAllCarouselImages);
+    adjustAllCarouselImages();
+
 });

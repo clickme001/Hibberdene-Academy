@@ -1,3 +1,38 @@
+/* Add this at the top of your CSS file */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Playfair+Display:wght@700&display=swap');
+
+/* Add these styles at the beginning of your CSS file */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1 0 auto;
+    padding-top: calc(15px + 60px); /* Keep your existing padding */
+}
+
+footer {
+    flex-shrink: 0;
+}
+
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #0056b3;
+    --accent-color: #ffc107;
+    --text-color: #333333;
+    --background-color: #ffffff;
+    --light-gray: #f8f9fa;
+    --dark-gray: #343a40;
+}
+
 /* Reset and general styles */
 * {
     margin: 0;
@@ -6,22 +41,36 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     line-height: 1.6;
-    color: #333;
-    overflow-x: hidden;
+    color: var(--text-color);
+    background-color: var(--background-color);
 }
 
-/* Header and Navigation */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-color);
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--secondary-color);
+}
+
+/* Navigation styles */
 header {
-    background-color: #007bff;
+    background-color: var(--primary-color);
     padding: 1rem 0;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 100;
-    height: 60px; /* Set a fixed height for the header */
 }
 
 nav {
@@ -36,87 +85,85 @@ nav {
 .nav-toggle {
     display: none;
     font-size: 1.5rem;
-    color: white;
+    color: var(--background-color);
     cursor: pointer;
 }
 
 .nav-menu {
     display: flex;
     list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-menu li {
+    position: relative;
     margin: 0 1rem;
 }
 
-.nav-menu li a {
-    color: white;
+.nav-menu a {
+    color: var(--background-color);
     text-decoration: none;
     font-weight: bold;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-    .nav-toggle {
-        display: block;
-    }
-
-    .nav-menu {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background-color: #007bff;
-        flex-direction: column;
-        align-items: center;
-        padding: 1rem 0;
-        display: none;
-    }
-
-    .nav-menu.active {
-        display: flex;
-    }
-
-    .nav-menu li {
-        margin: 0.5rem 0;
-    }
+/* Dropdown styles */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--secondary-color);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
 }
 
-/* Main content */
-main {
-    padding-top: 15px; /* Add a small padding */
+.dropdown-content a {
+    color: var(--background-color);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
 }
 
-#content {
-    min-height: calc(100vh - 60px - 100px); /* Adjust based on your header and footer heights */
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
+.dropdown-content a:hover {
+    background-color: var(--primary-color);
 }
 
-/* Hero section styles */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Login button styles */
+.login-btn {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #e0a800;
+}
+
+/* Hero section and carousel styles */
 #hero {
     position: relative;
-    height: calc(100vh - 70px); /* Reduced from 90px */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: calc(100vh - 15px);
+    width: 100%;
     overflow: hidden;
-    margin-top: 60px; /* Reduced from 75px */
-    background-color: white;
 }
 
 .carousel {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    position: relative;
     height: 100%;
+    width: 100%;
 }
 
 .carousel-inner {
-    width: 100%;
     height: 100%;
+    width: 100%;
 }
 
 .carousel-item {
@@ -133,274 +180,282 @@ main {
     opacity: 1;
 }
 
-.carousel-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* Changed back to 'contain' from 'cover' */
-    object-position: center; /* Center the image both vertically and horizontally */
+.carousel-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    z-index: 1;
 }
 
+.carousel-item img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+}
+
+/* Ensure the hero content is above the image and overlay */
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 2;
+    width: 80%;
+    max-width: 800px;
+}
+
+.hero-content h1 {
+    font-size: 3.3rem; /* Changed from 3.4rem to 3.3rem */
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content p {
+    font-size: 1.8rem; /* Increased from 1.5rem to 1.8rem */
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Adjust carousel controls to ensure they're visible */
 .carousel-control {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     color: white;
     border: none;
-    padding: 10px 15px;
-    font-size: 18px;
+    padding: 1rem;
+    font-size: 2rem;
     cursor: pointer;
-    z-index: 10; /* Ensure controls are above the images */
+    z-index: 3;
 }
 
 .carousel-control.prev {
-    left: 10px;
+    left: 1rem;
 }
 
 .carousel-control.next {
-    right: 10px;
+    right: 1rem;
 }
 
-.hero-content {
-    position: absolute;
-    z-index: 2;
-    text-align: center;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Center both vertically and horizontally */
-    width: 80%; /* Adjust as needed */
-    max-width: 600px; /* Adjust as needed */
+/* Responsive adjustments */
+@media (max-aspect-ratio: 16/9) {
+    .carousel-item img {
+        height: 100%;
+        width: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
 
-#hero h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+@media (min-aspect-ratio: 16/9) {
+    .carousel-item img {
+        width: 100%;
+        height: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
 
-#hero p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
+/* Quick links section */
+.quick-links-section {
+    background-color: var(--light-gray);
+    padding: 40px 0;
 }
 
-/* Button styles */
-button, .button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
-    display: inline-block;
-}
-
-button:hover, .button:hover {
-    background-color: #0056b3;
-}
-
-/* Form styles */
-form {
-    max-width: 500px;
+.quick-links-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
-input[type="email"], input[type="text"], textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+.quick-link {
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+    margin: 20px;
+    text-align: center;
+    padding: 30px;
+    background-color: var(--background-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.quick-link:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.quick-link i {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.quick-link h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.quick-link p {
+    font-size: 1rem;
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+.quick-link .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.quick-link .btn:hover {
+    background-color: var(--secondary-color);
+}
+
+@media (max-width: 768px) {
+    .quick-links-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .quick-link {
+        width: 90%;
+        max-width: none;
+        margin: 10px 0;
+    }
 }
 
 /* Footer styles */
 footer {
-    background-color: #333;
-    color: white;
-    padding: 1rem;
+    background-color: var(--dark-gray);
+    color: var(--background-color);
+    padding: 2rem 0;
     text-align: center;
 }
 
-footer .social-media {
-    margin-bottom: 0.5rem;
-}
-
-footer .quick-links {
-    margin-bottom: 0.5rem;
-}
-
-footer .social-icon,
-footer .quick-links a {
-    color: white;
-    text-decoration: none;
-    margin: 0 0.5rem;
-    font-size: 0.9rem;
-}
-
-footer .copyright {
-    font-size: 0.8rem;
-}
-
-/* Calendar section styles */
-.section-padding {
-    padding: 4rem 0;
-    background-color: #f0f8ff; /* Light blue background */
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-.section-title {
-    font-size: 2.5rem;
-    color: #007bff;
-    margin-bottom: 2rem;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-#calendar {
-    background-color: #f8f9fa;
-}
-
-.calendar-wrapper {
-    background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0, 123, 255, 0.1);
-    overflow: hidden;
-    border: 2px solid #007bff;
-}
-
-.calendar-header {
-    background-color: #007bff;
-    color: #ffffff;
-    padding: 1rem;
-    text-align: center;
-}
-
-.calendar-header h3 {
-    margin: 0;
+footer .social-icon {
+    color: var(--background-color);
     font-size: 1.5rem;
+    margin: 0 0.5rem;
+    transition: color 0.3s ease;
 }
 
-.calendar-wrapper iframe {
-    display: block;
-    width: 100%;
-    height: 600px;
-    border: none;
+footer .social-icon:hover {
+    color: var(--accent-color);
 }
 
-/* Responsive calendar */
+footer .quick-links a {
+    color: var(--background-color);
+    margin: 0.5rem 1rem;
+    transition: color 0.3s ease;
+}
+
+footer .quick-links a:hover {
+    color: var(--accent-color);
+}
+
+/* Responsive styles */
 @media (max-width: 768px) {
-    .section-title {
+    .nav-toggle {
+        display: block;
+    }
+
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--primary-color);
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
+
+    .nav-menu li {
+        margin: 0;
+        text-align: center;
+    }
+
+    .dropdown-content {
+        position: static;
+        background-color: var(--secondary-color);
+        box-shadow: none;
+    }
+
+    .dropdown-content.active {
+        display: block;
+    }
+
+    #hero h1 {
         font-size: 2rem;
     }
 
-    .calendar-wrapper iframe {
-        height: 500px;
+    #hero p {
+        font-size: 1.2rem;
+    }
+
+    #hero .cta-button {
+        padding: 12px 24px;
+        font-size: 1rem;
     }
 }
 
-@media (max-width: 480px) {
-    .section-title {
-        font-size: 1.8rem;
-    }
+/* ... (keep the rest of your existing styles) ... */
 
-    .calendar-wrapper iframe {
-        height: 400px;
-    }
-}
-
-/* Mini Calendar section styles */
-#mini-calendar {
-    background-color: #f0f8ff;
-    padding: 2rem 0;
-}
-
-#mini-calendar-container {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.1);
-    overflow: hidden;
-    border: 1px solid #007bff;
-    margin-bottom: 1rem;
-    height: 300px;
-    max-height: 300px; /* Adjust this value as needed */
-    overflow-y: auto;
-}
-
-#mini-calendar-container iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-}
-
-.view-full-calendar {
-    display: inline-block;
-    margin-top: 1rem;
-}
-
-/* Responsive styles for mini calendar */
-@media (max-width: 768px) {
-    #mini-calendar-container {
-        height: 250px;
-    }
-}
-
-@media (max-width: 480px) {
-    #mini-calendar-container {
-        height: 200px;
-    }
-}
-
-@media (max-width: 768px) {
-    #mini-calendar-container .fc {
-        max-height: 250px !important;
-    }
-}
-
-@media (max-width: 480px) {
-    #mini-calendar-container .fc {
-        max-height: 200px !important;
-    }
-}
-
-/* Full Calendar page styles */
+/* Calendar styles */
 #calendar {
     padding: 2rem 0;
 }
 
 #full-calendar-container {
-    background-color: #ffffff;
+    background-color: var(--background-color);
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0, 123, 255, 0.1);
     overflow: hidden;
-    border: 2px solid #007bff;
+    border: 2px solid var(--primary-color);
     height: 600px;
 }
 
-/* FullCalendar overrides */
 .fc .fc-toolbar-title {
     font-size: 1.5em;
-    color: #007bff;
+    color: var(--primary-color);
 }
 
 .fc .fc-button-primary {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
 .fc .fc-button-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
 }
 
 .fc .fc-daygrid-day.fc-day-today {
@@ -408,8 +463,78 @@ footer .copyright {
 }
 
 .fc .fc-event {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Change the text color of calendar events */
+.fc .fc-event-title,
+.fc .fc-event-time {
+    color: var(--background-color); /* This will make the text white, assuming your background color is white */
+}
+
+/* Mini Calendar styles */
+#mini-calendar {
+    background-color: var(--light-gray);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#mini-calendar h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+#mini-calendar-container {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: var(--background-color);
+}
+
+.fc-list-day {
+    background-color: var(--light-gray);
+    padding: 10px;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+}
+
+.fc-list-day-cushion {
+    color: var(--primary-color);
+}
+
+.fc-list-event {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.fc-list-event-time {
+    font-weight: bold;
+    margin-right: 10px;
+    color: var(--secondary-color);
+}
+
+.fc-list-event-title {
+    color: var(--text-color);
+}
+
+.fc-list-view-more {
+    text-align: center;
+    padding: 10px;
+}
+
+.fc-list-view-more a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.fc-list-view-more a:hover {
+    text-decoration: underline;
 }
 
 /* Responsive calendar */
@@ -417,823 +542,212 @@ footer .copyright {
     #full-calendar-container {
         height: 500px;
     }
-}
 
-@media (max-width: 480px) {
-    #full-calendar-container {
-        height: 400px;
-    }
-}
-
-/* Loading indicator */
-.loading {
-    text-align: center;
-    padding: 20px;
-    font-style: italic;
-    color: #007bff;
-}
-
-/* Add this to your existing CSS */
-.calendar-link-container {
-    text-align: center;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.1);
-}
-
-.calendar-link-container p {
-    margin-bottom: 15px;
-}
-
-/* Calendar page styles */
-.calendar-description {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
-}
-
-.calendar-info, .calendar-download, .calendar-contact {
-    margin-top: 2rem;
-    padding: 1rem;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-}
-
-.calendar-info h3, .calendar-download h3, .calendar-contact h3 {
-    color: #007bff;
-    margin-bottom: 1rem;
-}
-
-.calendar-info ul {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-.calendar-info li {
-    margin-bottom: 0.5rem;
-}
-
-.calendar-download .button {
-    margin-right: 1rem;
-    margin-bottom: 1rem;
-}
-
-.calendar-contact p {
-    margin-bottom: 0.5rem;
-}
-
-/* Styles for the "Our Location" heading */
-.map-container h2 {
-    text-align: center;
-    font-size: 2rem;
-    color: #007bff;
-    margin-bottom: 1rem;
-    padding: 1rem 0;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-bottom: 2px solid #007bff;
-    max-width: 300px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Adjust the map container padding */
-.map-container {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-}
-
-#mini-calendar-container .fc {
-    height: auto !important;
-    max-height: none !important;
-}
-
-#mini-calendar-container .fc .fc-scroller {
-    overflow: visible !important;
-}
-
-#mini-calendar-container .fc-list-event:hover {
-    background-color: #3788d8 !important;
-}
-
-#mini-calendar-container .fc-list-event:hover .fc-list-event-title,
-#mini-calendar-container .fc-list-event:hover .fc-list-event-time {
-    color: white !important;
-}
-
-#mini-calendar-container .fc-list-event-dot {
-    display: none !important;
-}
-
-#mini-calendar-container .fc-list-event {
-    background-color: #3788d8 !important;
-    border: none !important;
-    padding: 2px 8px !important;
-}
-
-#mini-calendar-container .fc-list-event-time,
-#mini-calendar-container .fc-list-event-title {
-    color: white !important;
-    display: inline !important;
-}
-
-#mini-calendar-container .fc-list-event-time {
-    margin-right: 5px !important;
-}
-
-#mini-calendar-container .fc-list-event:hover,
-#mini-calendar-container .fc-list-event:hover .fc-list-event-time,
-#mini-calendar-container .fc-list-event:hover .fc-list-event-title {
-    background-color: #3788d8 !important;
-    color: white !important;
-}
-
-#mini-calendar-container .fc-list-event-dot {
-    display: none !important;
-}
-
-#mini-calendar-container .fc-list-event td,
-#mini-calendar-container .fc-list-event:hover td {
-    background-color: transparent !important;
-    border: none !important;
-}
-
-#mini-calendar-container .fc-header-toolbar {
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-}
-
-#mini-calendar-container .fc-toolbar-title {
-    margin-bottom: 0 !important;
-    padding-bottom: 4px !important;
-    font-size: 1.2em !important;
-}
-
-#mini-calendar-container .fc-list-day {
-    padding-top: 4px !important;
-}
-
-#mini-calendar-container .fc-list-day-cushion {
-    padding: 4px 8px !important;
-}
-
-#mini-calendar-container .fc-list-event {
-    padding: 1px 8px !important;
-}
-
-#mini-calendar-container table {
-    margin-bottom: 0 !important;
-}
-
-#mini-calendar-container .fc-scroller {
-    overflow-y: hidden !important;
-}
-
-#mini-calendar-container {
-    height: auto !important;
-    max-height: 200px !important; /* Adjust this value as needed */
-    overflow: hidden !important;
-}
-
-#mini-calendar-container .fc-scroller {
-    height: auto !important;
-    max-height: 150px !important; /* This should be enough for 3 events plus some header space */
-    overflow-y: hidden !important;
-}
-
-#mini-calendar-container .fc-list-empty {
-    display: none !important; /* Hide the "No events" message if it appears */
-}
-
-#mini-calendar-container .fc-list-event {
-    padding: 2px 8px !important;
-}
-
-#mini-calendar-container .fc-list-day-cushion {
-    padding: 4px 8px !important;
-}
-
-@media (max-width: 768px) {
-    .calendar-description,
-    .calendar-info,
-    .calendar-download,
-    .calendar-contact {
-        font-size: 14px;
+    .fc .fc-toolbar {
+        flex-direction: column;
     }
 
-    .button {
-        display: block;
-        width: 100%;
+    .fc .fc-toolbar-title {
+        font-size: 1.2em;
         margin-bottom: 10px;
     }
 
-    .section-padding {
-        padding: 20px 10px;
-    }
-
-    .container {
-        padding: 0 10px;
+    .fc .fc-button {
+        font-size: 0.9em;
+        padding: 0.3em 0.5em;
     }
 }
 
-#mini-calendar-container .fc-list-event {
-    margin-bottom: 2px;
-}
-
-#mini-calendar-container .fc-list-day-side-text,
-#mini-calendar-container .fc-list-day-text {
-    font-weight: bold;
-}
-
-#mini-calendar-container {
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-#mini-calendar-container .fc-scroller {
-    overflow: visible !important;
-    height: auto !important;
-}
-
-#mini-calendar-container .fc-list-table {
-    height: auto !important;
-}
-
-#mini-calendar-container .fc-list-event {
-    margin-bottom: 2px;
-    display: block !important;
-    padding: 4px 8px !important;
-}
-
-#mini-calendar-container .fc-list-day {
-    background-color: #f8f9fa !important;
-    padding: 8px !important;
-    margin-top: 8px !important;
-    font-weight: bold !important;
-    color: #333 !important;
-}
-
-#mini-calendar-container .fc-list-day-cushion {
-    padding: 8px !important;
-}
-
-#mini-calendar-container .fc-list-day-text,
-#mini-calendar-container .fc-list-day-side-text {
-    font-weight: bold;
-    color: #333;
-}
-
-#mini-calendar-container .fc-list-event-time {
-    width: auto;
-    min-width: 80px;
-    display: inline-block !important;
-    vertical-align: top !important;
-}
-
-#mini-calendar-container .fc-list-event-title {
-    display: inline-block !important;
-    vertical-align: top !important;
-}
-
-#mini-calendar-container {
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-#mini-calendar-container .fc-list-event {
-    display: flex !important;
-    align-items: center !important;
-    padding: 6px 8px !important;
-    margin-bottom: 2px !important;
-    background-color: #3788d8 !important;
-    color: white !important;
-    height: 32px !important; /* Set a fixed height */
-    box-sizing: border-box !important;
-}
-
-#mini-calendar-container .fc-list-event-time {
-    flex: 0 0 auto !important;
-    margin-right: 8px !important;
-    white-space: nowrap !important;
-}
-
-#mini-calendar-container .fc-list-event-title {
-    flex: 1 1 auto !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-}
-
-#mini-calendar-container .fc-list-day {
-    background-color: #f8f9fa !important;
-    padding: 8px !important;
-    font-weight: bold !important;
-    color: #333 !important;
-}
-
-#mini-calendar-container .fc-list-day-cushion {
-    padding: 8px !important;
-}
-
-#mini-calendar-container .fc-list-table {
-    border-collapse: separate !important;
-    border-spacing: 0 2px !important;
-}
-
-#mini-calendar-container .fc-list-day {
-    background-color: #f8f9fa !important;
-    margin-top: 8px !important;
-    color: #333 !important;
-    height: 40px !important; /* Set a fixed height */
-    display: flex !important;
-    align-items: center !important;
-    box-sizing: border-box !important;
-}
-
-#mini-calendar-container .fc-list-day-cushion {
-    padding: 0 8px !important;
-    font-weight: bold !important;
-    width: 100% !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-}
-
-#mini-calendar-container {
-    max-height: 400px; /* Increase the max-height */
-    overflow-y: auto; /* Add scrollbar if content exceeds max-height */
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-#mini-calendar-container .fc-list-day {
-    background-color: #f8f9fa !important;
-    padding: 8px !important;
-    font-weight: bold !important;
-    color: #333 !important;
-    border-top: 1px solid #ddd;
-    margin-top: 10px;
-}
-
-#mini-calendar-container .fc-list-day:first-child {
-    border-top: none;
-    margin-top: 0;
-}
-
-#mini-calendar-container .fc-list-day-cushion {
-    padding: 8px !important;
-}
-
-#mini-calendar-container .fc-list-event {
-    display: flex !important;
-    align-items: center !important;
-    padding: 6px 8px !important;
-    margin-bottom: 2px !important;
-    background-color: #3788d8 !important;
-    color: white !important;
-    min-height: 32px !important;
-    box-sizing: border-box !important;
-    border-radius: 4px;
-}
-
-#mini-calendar-container .fc-list-event-time {
-    flex: 0 0 auto !important;
-    margin-right: 8px !important;
-    white-space: nowrap !important;
-    min-width: 60px !important;
-}
-
-#mini-calendar-container .fc-list-event-title {
-    flex: 1 1 auto !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-}
-
-#mini-calendar-container {
-    max-height: none; /* Remove max-height restriction */
-    overflow-y: visible; /* Allow content to expand */
-}
-
-#mini-calendar-container .fc-list-event {
-    display: flex !important;
-    align-items: center !important;
-    padding: 6px 8px !important;
-    margin-bottom: 2px !important;
-    background-color: #3788d8 !important;
-    color: white !important;
-    height: 32px !important; /* Set a fixed height */
-    box-sizing: border-box !important;
-}
-
-#mini-calendar-container .fc-list-event-time {
-    flex: 0 0 auto !important;
-    margin-right: 8px !important;
-    white-space: nowrap !important;
-}
-
-#mini-calendar-container .fc-list-event-title {
-    flex: 1 1 auto !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-}
-
-#mini-calendar-container .fc-list-day {
-    background-color: #f8f9fa !important;
-    padding: 8px !important;
-    font-weight: bold !important;
-    color: #333 !important;
-}
-
-#mini-calendar-container .fc-list-day-cushion {
-    padding: 8px !important;
-}
-
-#mini-calendar-container .fc-list-view-more {
-    text-align: center;
-    padding: 8px;
-    background-color: #f8f9fa;
-    border-top: 1px solid #ddd;
-}
-
-#mini-calendar-container .fc-list-view-more a {
-    color: #3788d8;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-#mini-calendar-container .fc-list-view-more a:hover {
-    text-decoration: underline;
-}
-
-#mini-calendar-container {
-    max-height: none;
-    overflow-y: visible;
-    padding-bottom: 10px; /* Add padding to the bottom */
-}
-
-#mini-calendar-container .fc-list-event {
-    display: flex !important;
-    align-items: center !important;
-    padding: 6px 8px !important;
-    margin-bottom: 2px !important;
-    background-color: #3788d8 !important;
-    color: white !important;
-    height: 32px !important;
-    box-sizing: border-box !important;
-}
-
-#mini-calendar-container .fc-list-event-time {
-    flex: 0 0 auto !important;
-    margin-right: 8px !important;
-    white-space: nowrap !important;
-}
-
-#mini-calendar-container .fc-list-event-title {
-    flex: 1 1 auto !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-}
-
-#mini-calendar-container .fc-list-day {
-    background-color: #f8f9fa !important;
-    padding: 8px !important;
-    font-weight: bold !important;
-    color: #333 !important;
-}
-
-#mini-calendar-container .fc-list-day-cushion {
-    padding: 8px !important;
-}
-
-#mini-calendar-container .fc-list-view-more {
-    text-align: center;
-    padding: 8px;
-    margin-top: 5px; /* Add margin to separate from events */
-}
-
-#mini-calendar-container .fc-list-view-more a {
-    display: inline-block; /* Make the link a block element */
-    padding: 5px 10px; /* Add padding to increase clickable area */
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    color: #3788d8;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-#mini-calendar-container .fc-list-view-more a:hover {
-    background-color: #e9ecef;
-    text-decoration: none;
-}
-
-#mini-calendar-container {
-    display: flex;
-    flex-direction: column;
-    max-height: none;
-    overflow: visible;
-}
-
-#mini-calendar-container .fc-list-event {
-    display: flex !important;
-    align-items: center !important;
-    padding: 6px 8px !important;
-    margin-bottom: 2px !important;
-    background-color: #3788d8 !important;
-    color: white !important;
-    height: 32px !important;
-    box-sizing: border-box !important;
-}
-
-#mini-calendar-container .fc-list-event-time {
-    flex: 0 0 auto !important;
-    margin-right: 8px !important;
-    white-space: nowrap !important;
-}
-
-#mini-calendar-container .fc-list-event-title {
-    flex: 1 1 auto !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-}
-
-#mini-calendar-container .fc-list-day {
-    background-color: #f8f9fa !important;
-    padding: 8px !important;
-    font-weight: bold !important;
-    color: #333 !important;
-}
-
-#mini-calendar-container .fc-list-day-cushion {
-    padding: 8px !important;
-}
-
-#mini-calendar-container .fc-list-view-more {
-    margin-top: 10px;
-    padding: 8px;
-    text-align: center;
-    background-color: #f8f9fa;
-    border-top: 1px solid #ddd;
-}
-
-#mini-calendar-container .fc-list-view-more a {
-    display: inline-block;
-    padding: 5px 10px;
-    background-color: #3788d8;
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 4px;
-}
-
-#mini-calendar-container .fc-list-view-more a:hover {
-    background-color: #2c6aa0;
-}
-
-#mini-calendar-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Align content to the top */
-    max-height: none;
-    overflow: visible;
-    padding-top: 0; /* Remove top padding if any */
-}
-
-#mini-calendar-container .fc-list-day:first-child {
-    margin-top: 0; /* Remove top margin from the first date header */
-}
-
-#mini-calendar-container .fc-list-event {
-    display: flex !important;
-    align-items: center !important;
-    padding: 6px 8px !important;
-    margin-bottom: 2px !important;
-    background-color: #3788d8 !important;
-    color: white !important;
-    height: 32px !important;
-    box-sizing: border-box !important;
-}
-
-#mini-calendar-container .fc-list-event-time {
-    flex: 0 0 auto !important;
-    margin-right: 8px !important;
-    white-space: nowrap !important;
-}
-
-#mini-calendar-container .fc-list-event-title {
-    flex: 1 1 auto !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-}
-
-#mini-calendar-container .fc-list-day {
-    background-color: #f8f9fa !important;
-    padding: 8px !important;
-    font-weight: bold !important;
-    color: #333 !important;
-}
-
-#mini-calendar-container .fc-list-day-cushion {
-    padding: 8px !important;
-}
-
-#mini-calendar-container .fc-list-view-more {
-    margin-top: auto; /* Push the "View More" link to the bottom */
-    padding: 8px;
-    text-align: center;
-    background-color: #f8f9fa;
-    border-top: 1px solid #ddd;
-}
-
-#mini-calendar-container .fc-list-view-more a {
-    display: inline-block;
-    padding: 5px 10px;
-    background-color: #3788d8;
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 4px;
-}
-
-#mini-calendar-container .fc-list-view-more a:hover {
-    background-color: #2c6aa0;
-}
-
-#mini-calendar-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    max-height: none;
-    overflow: visible;
-    padding-top: 0;
-}
-
-#mini-calendar-container .fc-list-day {
-    background-color: #f8f9fa !important;
-    padding: 4px 8px !important; /* Reduced padding */
-    font-weight: bold !important;
-    color: #333 !important;
-    margin-top: 4px !important; /* Reduced top margin */
-    margin-bottom: 2px !important; /* Added small bottom margin */
-}
-
-#mini-calendar-container .fc-list-day:first-child {
-    margin-top: 0 !important;
-}
-
-#mini-calendar-container .fc-list-day-cushion {
-    padding: 0 !important; /* Removed padding */
-}
-
-#mini-calendar-container .fc-list-event {
-    display: flex !important;
-    align-items: center !important;
-    padding: 4px 8px !important; /* Slightly reduced padding */
-    margin-bottom: 2px !important;
-    background-color: #3788d8 !important;
-    color: white !important;
-    height: 28px !important; /* Slightly reduced height */
-    box-sizing: border-box !important;
-}
-
-#mini-calendar-container .fc-list-event-time {
-    flex: 0 0 auto !important;
-    margin-right: 8px !important;
-    white-space: nowrap !important;
-}
-
-#mini-calendar-container .fc-list-event-title {
-    flex: 1 1 auto !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-}
-
-#mini-calendar-container .fc-list-view-more {
-    margin-top: auto;
-    padding: 8px;
-    text-align: center;
-    background-color: #f8f9fa;
-    border-top: 1px solid #ddd;
-}
-
-#mini-calendar-container .fc-list-view-more a {
-    display: inline-block;
-    padding: 4px 8px;
-    background-color: #3788d8;
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 4px;
-    font-size: 0.9em;
-}
-
-#mini-calendar-container .fc-list-view-more a:hover {
-    background-color: #2c6aa0;
-}
-
-.staff-login {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-}
-
-.login-btn {
-    display: inline-block;
-    padding: 8px 15px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-}
-
-.login-btn:hover {
-    background-color: #0056b3;
-}
+/* ... (keep the rest of your existing styles) ... */
 
-.login-btn i {
-    margin-right: 5px;
+/* Add padding to the main content area */
+main {
+    padding-top: calc(15px + 60px); /* 15px original padding + estimated header height */
 }
 
+/* Responsive styles */
 @media (max-width: 768px) {
-    .staff-login {
-        position: static;
+    header {
+        position: absolute; /* Change to absolute positioning on mobile */
+    }
+
+    main {
+        padding-top: calc(15px + 60px); /* Adjust if needed based on mobile header height */
+    }
+
+    .nav-toggle {
+        display: block;
+    }
+
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--primary-color);
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
+
+    .nav-menu li {
+        margin: 0;
         text-align: center;
-        margin-top: 10px;
+    }
+
+    .dropdown-content {
+        position: static;
+        background-color: var(--secondary-color);
+        box-shadow: none;
+    }
+
+    .dropdown-content.active {
+        display: block;
+    }
+
+    #hero {
+        margin-top: 60px; /* Add margin to account for the header height */
+    }
+
+    #hero h1 {
+        font-size: 2rem;
+    }
+
+    #hero p {
+        font-size: 1.2rem;
+    }
+
+    #hero .cta-button {
+        padding: 12px 24px;
+        font-size: 1rem;
     }
 }
 
-/* Add these styles at the end of your existing CSS file */
+/* ... (rest of the styles remain unchanged) ... */
 
-#staff-login {
-    max-width: 400px;
-    margin: 2rem auto;
+/* Contact page styles */
+.contact-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 2rem;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-#staff-login h1 {
-    text-align: center;
-    color: #007bff;
-    margin-bottom: 1.5rem;
+.contact-info {
+    flex: 1;
+    min-width: 300px;
+    margin-right: 2rem;
 }
 
-#login-form .form-group {
+.contact-form {
+    flex: 2;
+    min-width: 300px;
+}
+
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form input,
+.contact-form textarea {
     margin-bottom: 1rem;
-}
-
-#login-form label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-}
-
-#login-form input[type="text"],
-#login-form input[type="password"] {
-    width: 100%;
     padding: 0.5rem;
-    border: 1px solid #ced4da;
+    border: 1px solid var(--light-gray);
     border-radius: 4px;
 }
 
-#login-form .login-btn {
-    display: block;
-    width: 100%;
-    padding: 0.75rem;
-    background-color: #007bff;
+.contact-form button {
+    align-self: flex-start;
+    padding: 0.5rem 1rem;
+    background-color: var(--primary-color);
     color: white;
     border: none;
     border-radius: 4px;
-    font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-#login-form .login-btn:hover {
-    background-color: #0056b3;
+.contact-form button:hover {
+    background-color: var(--secondary-color);
 }
 
-#login-form .login-btn i {
-    margin-right: 0.5rem;
+@media (max-width: 768px) {
+    .contact-container {
+        flex-direction: column;
+    }
+
+    .contact-info,
+    .contact-form {
+        margin-right: 0;
+        margin-bottom: 2rem;
+    }
 }
 
-.error-message {
-    color: #dc3545;
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
-    border-radius: 4px;
-    padding: 10px;
-    margin-top: 10px;
-    text-align: center;
+/* ... (rest of the styles remain unchanged) ... */
+
+/* Map container styles */
+.map-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* ... (rest of the styles) ... */
+
+.cta-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+}
+
+.cta-button:hover {
+    background-color: #e0a800;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.3rem; /* Adjusted for mobile devices */
+    }
+
+    .hero-content p {
+        font-size: 1.4rem; /* Adjusted for mobile devices */
+    }
+
+    /* ... (other responsive styles remain unchanged) ... */
+}
+
+/* Style for exam events in the full calendar */
+.fc-event-title[style*="background-color: yellow"] {
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+/* Style for exam events in the mini-calendar */
+.fc-list-event-title[style*="background-color: yellow"] {
+    display: inline-block;
+    padding: 2px 4px;
+    border-radius: 3px;
 }
