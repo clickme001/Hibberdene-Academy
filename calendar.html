@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar - Hibberdene Academy</title>
+    <link rel="stylesheet" href="src/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Add FullCalendar CSS -->
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.css' rel='stylesheet' />
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="admissions-and-fees.html">Admissions and Fees</a></li>
+                <li><a href="student-life.html">Student Life</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="faculty.html">Faculty</a></li>
+                <li><a href="parents.html">Parent Resources</a></li>
+                <li><a href="calendar.html">Calendar</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="calendar" class="section-padding">
+            <div class="container">
+                <h2 class="section-title">School Calendar</h2>
+                <p class="calendar-description">Stay up-to-date with all school events, holidays, and important dates.</p>
+                
+                <div id="full-calendar-container"></div>
+                
+                <div class="calendar-info">
+                    <h3>Calendar Information</h3>
+                    <ul>
+                        <li>The school year runs from [Start Date] to [End Date].</li>
+                        <li>Public holidays are marked in red.</li>
+                        <li>School events are marked in blue.</li>
+                        <li>Exam periods are highlighted in yellow.</li>
+                    </ul>
+                </div>
+                
+                <div class="calendar-download">
+                    <h3>Download Calendar</h3>
+                    <p>You can download our school calendar to your personal device:</p>
+                    <a href="#" class="button">Download iCal</a>
+                    <a href="#" class="button">Add to Google Calendar</a>
+                </div>
+                
+                <div class="calendar-contact">
+                    <h3>Questions?</h3>
+                    <p>If you have any questions about the school calendar or need to report a conflict, please contact our administrative office:</p>
+                    <p>Email: admin@hibberdeneacademy.co.za</p>
+                    <p>Phone: (123) 456-7890</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="social-media">
+            <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        </div>
+        <div class="quick-links">
+            <a href="admissions-and-fees.html">Admissions and Fees</a>
+            <a href="programs.html">Programs</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="copyright">
+            &copy; 2023 Hibberdene Academy. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Add FullCalendar JS before your test.js -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js'></script>
+    <script src="test.js"></script>
+</body>
+</html>
