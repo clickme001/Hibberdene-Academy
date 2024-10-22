@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Login - Hibberdene Academy</title>
+    <link rel="stylesheet" href="src/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://alcdn.msauth.net/browser/2.30.0/js/msal-browser.min.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Add your header content here -->
+    </header>
+
+    <main>
+        <section id="staff-login">
+            <h1>Staff Login</h1>
+            <button id="loginButton" class="login-btn">
+                <i class="fas fa-sign-in-alt"></i> Login with Microsoft 365
+            </button>
+            <div id="error-message" class="error-message" style="display: none;"></div>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Add your footer content here -->
+    </footer>
+
+    <script>
+        const msalConfig = {
+            auth: {
+                clientId: "7442c895-c608-48bd-a949-2b70856ed99e",
+                authority: "https://login.microsoftonline.com/f2ad13d2-aabc-4b51-bf4b-fecf881d61a6",
+                redirectUri: window.location.origin + window.location.pathname,
+            },
+            cache: {
+                cacheLocation: "localStorage",
+                storeAuthStateInCookie: true,
+            },
+        };
+
+        const msalInstance = new msal.PublicClientApplication(msalConfig);
+
+        document.getElementById("loginButton").addEventListener("click", async () => {
+            try {
+                const loginResponse = await msalInstance.loginPopup({
+                    scopes: ["openid", "profile", "User.Read"],
+                });
+                console.log("Login successful", loginResponse);
+                window.location.href = "https://www.office.com/";
+            } catch (error) {
+                console.error("Login failed", error);
+                const errorMessage = document.getElementById("error-message");
+                errorMessage.textContent = "Login failed. Please try again.";
+                errorMessage.style.display = "block";
+            }
+        });
+
+        // Check if the user is already logged in
+        msalInstance.handleRedirectPromise().then((tokenResponse) => {
+            if (tokenResponse !== null) {
+                window.location.href = "https://www.office.com/";
+            }
+        }).catch((error) => {
+            console.error("Error during silent sign-in", error);
+        });
+    </script>
+</body>
+</html>
