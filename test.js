@@ -30,8 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const fullCalendarEl = document.getElementById('full-calendar-container');
         if (fullCalendarEl) {
             const now = new Date();
+            const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
             const oneYearLater = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
-            const events = await fetchEvents(now.toISOString(), oneYearLater.toISOString());
+            const events = await fetchEvents(oneYearAgo.toISOString(), oneYearLater.toISOString());
 
             new FullCalendar.Calendar(fullCalendarEl, {
                 initialView: 'dayGridMonth',
@@ -45,11 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 eventDidMount: function(info) {
                     console.log('Event mounted:', info.event.title);
                 },
-                loading: function(isLoading) {
-                    if (isLoading) {
-                        fullCalendarEl.innerHTML = '<p>Loading events...</p>';
-                    }
-                },
                 noEventsContent: 'No events to display'
             }).render();
         }
@@ -57,28 +53,75 @@ document.addEventListener('DOMContentLoaded', () => {
         const miniCalendarEl = document.getElementById('mini-calendar-container');
         if (miniCalendarEl) {
             const now = new Date();
-            const thirtyDaysLater = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 30);
-            const events = await fetchEvents(now.toISOString(), thirtyDaysLater.toISOString());
+            const sixtyDaysLater = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 60);
+            const events = await fetchEvents(now.toISOString(), sixtyDaysLater.toISOString());
 
-            new FullCalendar.Calendar(miniCalendarEl, {
-                initialView: 'listMonth',
-                headerToolbar: {
-                    left: '',
-                    center: 'title',
-                    right: ''
-                },
-                height: 'auto',
-                events: events,
-                eventDidMount: function(info) {
-                    console.log('Event mounted:', info.event.title);
-                },
-                noEventsContent: 'No upcoming events in the next 30 days',
-                visibleRange: {
-                    start: now,
-                    end: thirtyDaysLater
+            console.log('Fetched events for mini calendar:', JSON.parse(JSON.stringify(events)));
+
+            // Group events by date
+            const groupedEvents = groupEventsByDate(events);
+
+            // Clear existing content
+            miniCalendarEl.innerHTML = '';
+
+            // Render grouped events (limited to 2)
+            let eventCount = 0;
+            for (const [date, dayEvents] of Object.entries(groupedEvents).sort()) {
+                if (eventCount >= 2) break;
+
+                const dateEl = document.createElement('div');
+                dateEl.className = 'fc-list-day';
+                dateEl.innerHTML = `<div class="fc-list-day-cushion">${formatDate(date)}</div>`;
+                miniCalendarEl.appendChild(dateEl);
+
+                for (const event of dayEvents) {
+                    if (eventCount >= 2) break;
+                    const eventEl = document.createElement('div');
+                    eventEl.className = 'fc-list-event';
+                    eventEl.innerHTML = `
+                        <div class="fc-list-event-time">${formatEventTime(event)}</div>
+                        <div class="fc-list-event-title">${event.title}</div>
+                    `;
+                    miniCalendarEl.appendChild(eventEl);
+                    eventCount++;
                 }
-            }).render();
+            }
+
+            // Add "View More" link if there are more than 2 events
+            if (events.length > 2) {
+                const viewMoreEl = document.createElement('div');
+                viewMoreEl.className = 'fc-list-view-more';
+                viewMoreEl.innerHTML = `<a href="calendar.html">View More</a>`;
+                miniCalendarEl.appendChild(viewMoreEl);
+            }
+
+            console.log('Grouped events:', JSON.parse(JSON.stringify(groupedEvents)));
         }
+    }
+
+    function groupEventsByDate(events) {
+        return events.reduce((groups, event) => {
+            const date = new Date(event.start);
+            const dateString = date.toISOString().split('T')[0];
+            if (!groups[dateString]) {
+                groups[dateString] = [];
+            }
+            groups[dateString].push(event);
+            return groups;
+        }, {});
+    }
+
+    function formatDate(dateString) {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    }
+
+    function formatEventTime(event) {
+        if (event.allDay) {
+            return 'All day';
+        }
+        const date = new Date(event.start);
+        return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
     }
 
     // Navigation toggle for mobile
