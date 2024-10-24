@@ -30,6 +30,13 @@ app.get('/api/secret', (req, res) => {
   res.json({ secret: process.env.CLIENT_SECRET });
 });
 
+app.get('/api/env', (req, res) => {
+  res.json({
+    CLIENT_ID: process.env.CLIENT_ID,
+    AUTHORITY: process.env.AUTHORITY
+  });
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

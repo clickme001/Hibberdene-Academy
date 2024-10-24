@@ -1,7 +1,7 @@
 const msalConfig = {
     auth: {
-        clientId: process.env.CLIENT_ID,
-        authority: process.env.AUTHORITY,
+        clientId: window.env.CLIENT_ID,
+        authority: window.env.AUTHORITY,
         redirectUri: window.location.origin + "/calendar.html",
     },
     cache: {
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         events: async function(fetchInfo, successCallback, failureCallback) {
             try {
                 const accounts = msalInstance.getAllAccounts();
-                if (!accounts || accounts.length === 0) { // Pff5e
+                if (!accounts || accounts.length === 0) {
                     if (!interactionInProgress) {
                         interactionInProgress = true;
                         msalInstance.loginRedirect({
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tokenResponse = await msalInstance.acquireTokenSilent({
                     scopes: ["Calendars.Read"],
                     account: account
-                }).catch(error => { // P1bfe
+                }).catch(error => {
                     console.error('Token acquisition failed', error);
                     throw error;
                 });
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Error fetching events', error);
                 failureCallback(error);
             } finally {
-                interactionInProgress = false; // P6f3f
+                interactionInProgress = false;
             }
         }
     });
