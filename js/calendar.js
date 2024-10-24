@@ -1,7 +1,7 @@
 const msalConfig = {
     auth: {
-        clientId: "YOUR_CLIENT_ID",
-        authority: "https://login.microsoftonline.com/f2ad13d2-aabc-4b51-bf4b-fecf881d61a6",
+        clientId: process.env.CLIENT_ID,
+        authority: process.env.AUTHORITY,
         redirectUri: window.location.origin + "/calendar.html",
     },
     cache: {

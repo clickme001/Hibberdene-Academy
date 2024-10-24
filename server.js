@@ -21,6 +21,10 @@ app.get('/api/calendar/events', async (req, res) => {
   }
 });
 
+app.get('/api/secret', (req, res) => {
+  res.json({ secret: process.env.CLIENT_SECRET });
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
