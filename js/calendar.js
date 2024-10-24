@@ -1,11 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Google Calendar API settings
-    const API_KEY = process.env.API_KEY; // Use your environment variable
-    const CALENDAR_ID = process.env.CALENDAR_ID; // Use your environment variable
+    // Function to fetch API key and Calendar ID from server-side endpoint
+    async function fetchCredentials() {
+        try {
+            const response = await fetch('/api/credentials');
+            const data = await response.json();
+            if (!data.apiKey || !data.calendarId) {
+                console.error('API key or Calendar ID not found in response:', data);
+                return null;
+            }
+            return data;
+        } catch (error) {
+            console.error('Error fetching credentials:', error);
+            return null;
+        }
+    }
 
     // Function to fetch events from Google Calendar API
-    async function fetchEvents(timeMin, timeMax) {
-        const url = `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?key=${API_KEY}&timeMin=${timeMin}&timeMax=${timeMax}&singleEvents=true&orderBy=startTime`;
+    async function fetchEvents(apiKey, calendarId, timeMin, timeMax) {
+        const url = `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${timeMin}&timeMax=${timeMax}&singleEvents=true&orderBy=startTime`;
         
         try {
             const response = await fetch(url);
@@ -35,10 +47,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const miniCalendarEl = document.getElementById('mini-calendar-container');
 
         if (fullCalendarEl || miniCalendarEl) {
+            const credentials = await fetchCredentials();
+            if (!credentials) {
+                console.error('Failed to fetch credentials');
+                return;
+            }
+
             const now = new Date();
             const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
             const oneYearLater = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
-            const events = await fetchEvents(oneYearAgo.toISOString(), oneYearLater.toISOString());
+            const events = await fetchEvents(credentials.apiKey, credentials.calendarId, oneYearAgo.toISOString(), oneYearLater.toISOString());
             console.log('Events to render:', events); // Log events to render
 
             if (fullCalendarEl) {
