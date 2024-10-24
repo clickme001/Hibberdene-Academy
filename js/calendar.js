@@ -1,50 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Google Calendar API settings
-    const API_KEY = process.env.API_KEY; // Use your environment variable
-    const CALENDAR_ID = process.env.CALENDAR_ID; // Use your environment variable
-
-    // Function to fetch events from Google Calendar API
-    async function fetchEvents(timeMin, timeMax) {
-        const url = `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?key=${API_KEY}&timeMin=${timeMin}&timeMax=${timeMax}&singleEvents=true&orderBy=startTime`;
-        
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            
-            if (!data.items) {
-                console.error('No events found or error in response:', data);
-                return [];
-            }
-
-            console.log('Fetched events:', data.items); // Log fetched events
-            return data.items.map(event => ({
-                title: event.summary,
-                start: event.start.dateTime || event.start.date,
-                end: event.end.dateTime || event.end.date,
-                allDay: !event.start.dateTime
-            }));
-        } catch (error) {
-            console.error('Error fetching events:', error);
-            return [];
-        }
-    }
-
-    // Function to verify API key and calendar ID
-    async function verifyAPIKeyAndCalendarID() {
-        const testUrl = `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?key=${API_KEY}&timeMin=2022-01-01T00:00:00Z&timeMax=2022-01-02T00:00:00Z&singleEvents=true&orderBy=startTime`;
-        
-        try {
-            const response = await fetch(testUrl);
-            if (response.ok) {
-                console.log('API key and calendar ID are valid and active.');
-            } else {
-                console.error('API key or calendar ID is invalid or inactive:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error verifying API key and calendar ID:', error);
-        }
-    }
-
     // Function to initialize calendars
     async function initializeCalendars() {
         const fullCalendarEl = document.getElementById('full-calendar-container');
@@ -54,8 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const now = new Date();
             const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
             const oneYearLater = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
-            const events = await fetchEvents(oneYearAgo.toISOString(), oneYearLater.toISOString());
-            console.log('Events to render:', events); // Log events to render
+            const events = []; // Placeholder for events
 
             if (fullCalendarEl) {
                 new FullCalendar.Calendar(fullCalendarEl, {
@@ -120,9 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-
-    // Verify API key and calendar ID
-    verifyAPIKeyAndCalendarID();
 
     // Initialize calendars
     initializeCalendars();
