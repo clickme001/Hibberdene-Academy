@@ -11,7 +11,7 @@ const msalConfig = {
 };
 
 const msalInstance = new msal.PublicClientApplication(msalConfig);
-let interactionInProgress = false; // P241b
+let interactionInProgress = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     const calendarEl = document.getElementById('full-calendar-container');
@@ -21,9 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
         events: async function(fetchInfo, successCallback, failureCallback) {
             try {
                 const accounts = msalInstance.getAllAccounts();
-                if (accounts.length === 0) {
-                    if (!interactionInProgress) { // P241b
-                        interactionInProgress = true; // P241b
+                if (!accounts || accounts.length === 0) { // Pff5e
+                    if (!interactionInProgress) {
+                        interactionInProgress = true;
                         msalInstance.loginRedirect({
                             scopes: ["Calendars.Read"]
                         });
@@ -35,6 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tokenResponse = await msalInstance.acquireTokenSilent({
                     scopes: ["Calendars.Read"],
                     account: account
+                }).catch(error => { // P1bfe
+                    console.error('Token acquisition failed', error);
+                    throw error;
                 });
 
                 if (!tokenResponse) {
@@ -58,6 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (error) {
                 console.error('Error fetching events', error);
                 failureCallback(error);
+            } finally {
+                interactionInProgress = false; // P6f3f
             }
         }
     });
