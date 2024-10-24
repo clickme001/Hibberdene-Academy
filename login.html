@@ -6,6 +6,7 @@
     <title>Login - Hibberdene Academy</title>
     <link rel="stylesheet" href="src/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/darkmode.css">
     <script src="https://alcdn.msauth.net/browser/2.30.0/js/msal-browser.min.js"></script>
 </head>
 <body>
@@ -59,6 +60,7 @@
         </div>
     </footer>
 
+    <script src="js/common.js"></script>
     <script>
         const msalConfig = {
             auth: {
@@ -93,6 +95,8 @@
             errorMessage.textContent = "Login failed. Please try again.";
             errorMessage.style.display = "block";
         });
+        
     </script>
+    <script src="/js/common.js"></script>
 </body>
 </html>

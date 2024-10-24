@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Add FullCalendar CSS -->
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.css' rel='stylesheet' />
+    <link rel="stylesheet" href="/css/darkmode.css">
     <style>
         @media (max-width: 768px) {
             #full-calendar-container {
@@ -27,6 +28,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/themes/light-border.css"/>
 </head>
 <body>
     <header>
@@ -114,36 +116,11 @@
         </div>
     </footer>
 
-    <!-- Add FullCalendar JS before your test.js -->
+    <!-- Add FullCalendar JS -->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js'></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('full-calendar-container');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-                },
-                height: 'auto',
-                contentHeight: 'auto',
-                aspectRatio: 1.35,
-                windowResize: function(view) {
-                    if (window.innerWidth < 768) {
-                        calendar.changeView('listMonth');
-                    } else {
-                        calendar.changeView('dayGridMonth');
-                    }
-                },
-                loading: function(isLoading) {
-                    // This function will be called when loading starts or ends
-                    // We're not doing anything here, effectively removing the loading indicator
-                }
-            });
-            calendar.render();
-        });
-    </script>
-    <script src="test.js"></script>
+    <script src="/js/calendar.js"></script>
+    <script src="/js/common.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
 </body>
 </html>
