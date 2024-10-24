@@ -1,7 +1,9 @@
 const msalConfig = {
     auth: {
+ fix-secret-scanning
         clientId: process.env.CLIENT_ID,
         authority: process.env.AUTHORITY,
+
         redirectUri: window.location.origin + "/calendar.html",
     },
     cache: {
@@ -19,18 +21,23 @@ document.addEventListener('DOMContentLoaded', () => {
         initialView: 'dayGridMonth',
         events: async function(fetchInfo, successCallback, failureCallback) {
             try {
-                const account = msalInstance.getAllAccounts()[0];
-                if (!account) {
+                const accounts = msalInstance.getAllAccounts();
+                if (accounts.length === 0) {
                     msalInstance.loginRedirect({
                         scopes: ["Calendars.Read"]
                     });
                     return;
                 }
 
+                const account = accounts[0];
                 const tokenResponse = await msalInstance.acquireTokenSilent({
                     scopes: ["Calendars.Read"],
                     account: account
                 });
+
+                if (!tokenResponse) {
+                    throw new Error("Token response is undefined");
+                }
 
                 const response = await fetch('/api/calendar/events', {
                     headers: {
