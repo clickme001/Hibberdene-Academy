@@ -1,20 +1,24 @@
-const msalConfig = {
-    auth: {
-        clientId: window.env.CLIENT_ID,
-        authority: window.env.AUTHORITY,
-        redirectUri: window.location.origin + "/calendar.html",
-    },
-    cache: {
-        cacheLocation: "localStorage",
-        storeAuthStateInCookie: true,
-    },
-};
-
-const msalInstance = new msal.PublicClientApplication(msalConfig);
-let interactionInProgress = false;
-
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const calendarEl = document.getElementById('full-calendar-container');
+
+    // Fetch the configuration from the API endpoint
+    const response = await fetch('/api/config');
+    const config = await response.json();
+
+    const msalConfig = {
+        auth: {
+            clientId: config.CLIENT_ID,
+            authority: config.AUTHORITY,
+            redirectUri: window.location.origin + "/calendar.html",
+        },
+        cache: {
+            cacheLocation: "localStorage",
+            storeAuthStateInCookie: true,
+        },
+    };
+
+    const msalInstance = new msal.PublicClientApplication(msalConfig);
+    let interactionInProgress = false;
 
     const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',

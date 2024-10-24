@@ -29,41 +29,53 @@
 
     <script src="js/common.js"></script>
     <script>
-        const msalConfig = {
-            auth: {
-                clientId: process.env.CLIENT_ID,
-                authority: process.env.AUTHORITY,
-                redirectUri: window.location.origin + "/staff-login.html",
-            },
-            cache: {
-                cacheLocation: "localStorage",
-                storeAuthStateInCookie: true,
-            },
-        };
+        async function fetchConfig() {
+            const response = await fetch('/api/config');
+            return response.json();
+        }
 
-        const msalInstance = new msal.PublicClientApplication(msalConfig);
-        let interactionInProgress = false;
+        fetchConfig().then(config => {
+            const msalConfig = {
+                auth: {
+                    clientId: config.CLIENT_ID,
+                    authority: config.AUTHORITY,
+                    redirectUri: window.location.origin + "/staff-login.html",
+                },
+                cache: {
+                    cacheLocation: "localStorage",
+                    storeAuthStateInCookie: true,
+                },
+            };
 
-        document.getElementById("loginButton").addEventListener("click", () => {
-            if (!interactionInProgress) {
-                interactionInProgress = true;
-                msalInstance.loginRedirect({
-                    scopes: ["openid", "profile", "User.Read"]
-                });
-            }
-        });
+            const msalInstance = new msal.PublicClientApplication(msalConfig);
+            let interactionInProgress = false;
 
-        // Handle the redirect promise when the page loads
-        msalInstance.handleRedirectPromise().then((tokenResponse) => {
-            if (tokenResponse !== null) {
-                // User has been successfully authenticated
-                console.log("Login successful", tokenResponse);
-                window.location.href = "https://www.office.com/";
-            }
-        }).catch((error) => {
-            console.error("Error during login", error);
+            document.getElementById("loginButton").addEventListener("click", () => {
+                if (!interactionInProgress) {
+                    interactionInProgress = true;
+                    msalInstance.loginRedirect({
+                        scopes: ["openid", "profile", "User.Read"]
+                    });
+                }
+            });
+
+            // Handle the redirect promise when the page loads
+            msalInstance.handleRedirectPromise().then((tokenResponse) => {
+                if (tokenResponse !== null) {
+                    // User has been successfully authenticated
+                    console.log("Login successful", tokenResponse);
+                    window.location.href = "https://www.office.com/";
+                }
+            }).catch((error) => {
+                console.error("Error during login", error);
+                const errorMessage = document.getElementById("error-message");
+                errorMessage.textContent = "Login failed. Please try again.";
+                errorMessage.style.display = "block";
+            });
+        }).catch(error => {
+            console.error("Error fetching configuration", error);
             const errorMessage = document.getElementById("error-message");
-            errorMessage.textContent = "Login failed. Please try again.";
+            errorMessage.textContent = "Failed to load configuration. Please try again later.";
             errorMessage.style.display = "block";
         });
     </script>
