@@ -1,27 +1,31 @@
-const msalConfig = {
-    auth: {
-        clientId: process.env.CLIENT_ID,
-        authority: process.env.AUTHORITY,
-        redirectUri: window.location.origin + "/calendar.html",
-    },
-    cache: {
-        cacheLocation: "localStorage",
-        storeAuthStateInCookie: true,
-    },
-};
-
-const msalInstance = new msal.PublicClientApplication(msalConfig);
-let interactionInProgress = false;
-
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const calendarEl = document.getElementById('full-calendar-container');
+
+    // Fetch the configuration from the API endpoint
+    const response = await fetch('/api/config');
+    const config = await response.json();
+
+    const msalConfig = {
+        auth: {
+            clientId: config.CLIENT_ID,
+            authority: config.AUTHORITY,
+            redirectUri: window.location.origin + "/calendar.html",
+        },
+        cache: {
+            cacheLocation: "localStorage",
+            storeAuthStateInCookie: true,
+        },
+    };
+
+    const msalInstance = new msal.PublicClientApplication(msalConfig);
+    let interactionInProgress = false;
 
     const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         events: async function(fetchInfo, successCallback, failureCallback) {
             try {
                 const accounts = msalInstance.getAllAccounts();
-                if (!accounts || accounts.length === 0) { // Pff5e
+                if (!accounts || accounts.length === 0) {
                     if (!interactionInProgress) {
                         interactionInProgress = true;
                         msalInstance.loginRedirect({
@@ -35,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tokenResponse = await msalInstance.acquireTokenSilent({
                     scopes: ["Calendars.Read"],
                     account: account
-                }).catch(error => { // P1bfe
+                }).catch(error => {
                     console.error('Token acquisition failed', error);
                     throw error;
                 });
@@ -62,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Error fetching events', error);
                 failureCallback(error);
             } finally {
-                interactionInProgress = false; // P6f3f
+                interactionInProgress = false;
             }
         }
     });
