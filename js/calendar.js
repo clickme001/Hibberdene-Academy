@@ -1,6 +1,6 @@
 const msalConfig = {
     auth: {
-        clientId: "7442c895-c608-48bd-a949-2b70856ed99e",
+        clientId: "A608Q~~dgKVm5Zu4aQPjmyCM5LLo4~I7QRH0Tcd1",
         authority: "https://login.microsoftonline.com/f2ad13d2-aabc-4b51-bf4b-fecf881d61a6",
         redirectUri: window.location.origin + "/calendar.html",
     },
