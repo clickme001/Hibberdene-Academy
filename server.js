@@ -9,9 +9,14 @@ const port = process.env.PORT || 3000;
 
 app.get('/api/calendar/events', async (req, res) => {
   try {
+    const accessToken = process.env.ACCESS_TOKEN;
+    if (!accessToken) {
+      throw new Error('ACCESS_TOKEN is not set in the environment variables');
+    }
+
     const response = await fetch('https://graph.microsoft.com/v1.0/me/events', {
       headers: {
-        'Authorization': `Bearer ${process.env.ACCESS_TOKEN}`
+        'Authorization': `Bearer ${accessToken}`
       }
     });
     const data = await response.json();

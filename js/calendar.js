@@ -1,6 +1,6 @@
 const msalConfig = {
     auth: {
-        clientId: "YOUR_CLIENT_ID",
+        clientId: "A608Q~~dgKVm5Zu4aQPjmyCM5LLo4~I7QRH0Tcd1",
         authority: "https://login.microsoftonline.com/f2ad13d2-aabc-4b51-bf4b-fecf881d61a6",
         redirectUri: window.location.origin + "/calendar.html",
     },
@@ -19,18 +19,23 @@ document.addEventListener('DOMContentLoaded', () => {
         initialView: 'dayGridMonth',
         events: async function(fetchInfo, successCallback, failureCallback) {
             try {
-                const account = msalInstance.getAllAccounts()[0];
-                if (!account) {
+                const accounts = msalInstance.getAllAccounts();
+                if (accounts.length === 0) {
                     msalInstance.loginRedirect({
                         scopes: ["Calendars.Read"]
                     });
                     return;
                 }
 
+                const account = accounts[0];
                 const tokenResponse = await msalInstance.acquireTokenSilent({
                     scopes: ["Calendars.Read"],
                     account: account
                 });
+
+                if (!tokenResponse) {
+                    throw new Error("Token response is undefined");
+                }
 
                 const response = await fetch('/api/calendar/events', {
                     headers: {
