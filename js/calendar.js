@@ -1,9 +1,7 @@
 const msalConfig = {
     auth: {
- fix-secret-scanning
         clientId: process.env.CLIENT_ID,
         authority: process.env.AUTHORITY,
-
         redirectUri: window.location.origin + "/calendar.html",
     },
     cache: {
@@ -13,6 +11,7 @@ const msalConfig = {
 };
 
 const msalInstance = new msal.PublicClientApplication(msalConfig);
+let interactionInProgress = false; // P241b
 
 document.addEventListener('DOMContentLoaded', () => {
     const calendarEl = document.getElementById('full-calendar-container');
@@ -23,9 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const accounts = msalInstance.getAllAccounts();
                 if (accounts.length === 0) {
-                    msalInstance.loginRedirect({
-                        scopes: ["Calendars.Read"]
-                    });
+                    if (!interactionInProgress) { // P241b
+                        interactionInProgress = true; // P241b
+                        msalInstance.loginRedirect({
+                            scopes: ["Calendars.Read"]
+                        });
+                    }
                     return;
                 }
 
