@@ -1,3 +1,5 @@
+<!-- calendar.html (updated) -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,17 +14,17 @@
     <style>
         @media (max-width: 768px) {
             #full-calendar-container {
-                height: 80vh !important;
+                height: 80vh!important;
                 font-size: 14px;
             }
-            .fc .fc-toolbar {
+           .fc.fc-toolbar {
                 flex-direction: column;
             }
-            .fc .fc-toolbar-title {
+           .fc.fc-toolbar-title {
                 font-size: 1.2em;
                 margin-bottom: 10px;
             }
-            .fc .fc-button {
+           .fc.fc-button {
                 font-size: 0.9em;
                 padding: 0.3em 0.5em;
             }
@@ -118,15 +120,9 @@
 
     <!-- Add FullCalendar JS -->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js'></script>
-    <script src="js/calendar.js"></script>
+    <script type="module" src="js/calendar.js"></script> <!-- Updated to type="module" -->
     <script src="js/common.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
-    <script>
-        window.env = {
-            CLIENT_ID: "<%= process.env.CLIENT_ID %>",
-            AUTHORITY: "<%= process.env.AUTHORITY %>"
-        };
-    </script>
 </body>
 </html>
