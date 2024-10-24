@@ -37,6 +37,20 @@ app.get('/api/env', (req, res) => {
   });
 });
 
+app.get('/api/config', (req, res) => {
+  res.json({
+    CLIENT_ID: process.env.CLIENT_ID,
+    AUTHORITY: process.env.AUTHORITY
+  });
+});
+
+app.get('/api/config/msal', (req, res) => {
+  res.json({
+    CLIENT_ID: process.env.CLIENT_ID,
+    AUTHORITY: process.env.AUTHORITY
+  });
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
