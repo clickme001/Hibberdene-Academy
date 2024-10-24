@@ -29,6 +29,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Function to verify API key and calendar ID
+    async function verifyAPIKeyAndCalendarID() {
+        const testUrl = `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?key=${API_KEY}&timeMin=2022-01-01T00:00:00Z&timeMax=2022-01-02T00:00:00Z&singleEvents=true&orderBy=startTime`;
+        
+        try {
+            const response = await fetch(testUrl);
+            if (response.ok) {
+                console.log('API key and calendar ID are valid and active.');
+            } else {
+                console.error('API key or calendar ID is invalid or inactive:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error verifying API key and calendar ID:', error);
+        }
+    }
+
     // Function to initialize calendars
     async function initializeCalendars() {
         const fullCalendarEl = document.getElementById('full-calendar-container');
@@ -104,6 +120,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+
+    // Verify API key and calendar ID
+    verifyAPIKeyAndCalendarID();
 
     // Initialize calendars
     initializeCalendars();
